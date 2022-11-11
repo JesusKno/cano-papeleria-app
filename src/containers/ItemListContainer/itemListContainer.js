@@ -1,38 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ItemList from './itemList/itemList';
+import { getDocs, collection, query, where} from "firebase/firestore";
+import { db}  from "../../firebase/firebase";
 
-export const ItemListContainer = ({greeting}) => {
+export const ItemListContainer = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { id } = useParams();
-  const URL_BASE = 'https://fakestoreapi.com/products';
-  const URL_CAT = `${URL_BASE}/category/${id}`;
-  
+  const productCollection = collection(db, 'product');
+  let queryDocs;
+  if (id === undefined) {
+    queryDocs = productCollection
+  }else{
+    queryDocs = query(productCollection, where('category', '==', id ))
+  }
   useEffect(() =>{
-    const getProduct = async () => {
-        try {
+    getDocs(queryDocs)
+    .then((result) => {
+      const listProduct = result.docs.map((product) => {
+        return {
+          ...product.data(),
+          id: product.id,
+        };
+      });
+      setProducts(listProduct);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(setLoading(false))
 
-            const res = await fetch( id ? URL_CAT : URL_BASE);
-            const data = await res.json();
-            const products = data.map(item => {
-                return {...item, stock: Math.floor(Math.random() * 50)}
-            });
-            console.log(products);
-            setProducts(products)
-            
-        } catch (error) {
-            console.log(error);
-        } finally{
-            setLoading(false)
-        }
-    };
-    getProduct();
-  }, [id, URL_BASE, URL_CAT]);
+  }, [id, queryDocs]);
 
   return (
     <>
-        <h1>{greeting}</h1>
         {<>{loading ? <h1>Cargando...</h1> : <ItemList products={products} />}</>}
     </>
   );

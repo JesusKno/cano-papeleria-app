@@ -1,16 +1,15 @@
 import React from 'react';
 import logoPapeleria from "../../assets/logoPapeleria.jpg";
-import cartWidget, { CartWidget } from "../CartWidget/cartWidget";
+import { CartWidget } from "../CartWidget/cartWidget";
 import { styles } from './Navbar.style';
 import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
 
     const secciones = [
-        {nombre:'electronica', id:0, ruta:'/categoria/electronics'},
-        {nombre:'Joyeria', id:1, ruta:'/categoria/jewelery'},
-        {nombre:'Ropa de hombre', id:2, ruta:"/categoria/men's clothing"},
-        {nombre: 'Ropa de mujer', id:3, ruta: "/categoria/women's clothing"},
+        {nombre:'Lapiz y plumas', id:0, ruta:'/category/Lapiz y pluma'},
+        {nombre:'Libretas', id:1, ruta:'/category/Libreta'},
+        {nombre:'Marcadores', id:2, ruta:"/category/Marcador"},
     ];
 
     return (

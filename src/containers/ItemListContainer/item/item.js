@@ -16,7 +16,7 @@ const Item = ({product}) => {
         <CardActionArea>
             <CardMedia
                 component='img'
-                height='140'
+                height='180'
                 image={product.image}
                 alt={product.title} 
             />
@@ -55,7 +55,7 @@ const styles = {
         justifyContent: 'center',
         aligntItems: 'center',
         margin: 20,
-        backgroundColor: 'rgba(143, 143, 143)'
+        background: 'linear-gradient(90deg, rgba(255,249,249,1) 0%, rgba(250,250,255,1) 35%, rgba(255,250,250,1) 100%)',
     },
     title: {
         textOverflow: 'ellipsis',

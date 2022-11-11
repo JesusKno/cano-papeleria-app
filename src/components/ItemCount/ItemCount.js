@@ -1,8 +1,15 @@
 import React, { useState } from 'react'
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+
 
 const ItemCount = ({ stock, initial, onAdd }) => {
 
-  const [count, setCount] = useState([]);
+  const [count, setCount] = useState(1);
+
   
   const substract = () =>{
     if(count > 1) {
@@ -16,15 +23,20 @@ const ItemCount = ({ stock, initial, onAdd }) => {
     }
   };
 
+
   return (
-    <div>
-        <button onClick={substract}>-</button>
+    <Stack direction='row' spacing={4} justifyContent='center' alignItems='center' >
+        <IconButton onClick={substract}>
+            <RemoveIcon/>
+        </IconButton>
         <h2>{count}</h2>
-        <button onClick={add}>+</button>
-        <button disabled={stock === 0} onClick={()=>onAdd(count)}>
-         <span>{stock === 0 ? 'No tenemos stock' : 'Agrega al carrito'}</span>
-        </button>
-    </div>
+        <IconButton onClick={add}>
+            <AddIcon/>
+        </IconButton>
+        <IconButton disabled={stock === 0} onClick={()=>onAdd(count)}>
+         <span>{stock === 0 ? 'No tenemos stock' : <AddShoppingCartIcon/>}</span>
+        </IconButton>
+    </Stack>
   );
 };
 
